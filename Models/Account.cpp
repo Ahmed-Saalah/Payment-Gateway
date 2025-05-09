@@ -12,13 +12,13 @@ private:
 
 public:
     Account() = default;
-    Account(const string& name , string password) : AccountId(Ids++), HandlerName(name) {}
+    Account(const string& name , string password): AccountId(Ids++), HandlerName(name), Password(password) {}
 
     int getAccountId() const { return AccountId; }
     string getHandlerName() const { return HandlerName; }
     string getPassword()const{ return password;}
 
-    void setPassword(string password){ Password = password}
+    void setPassword(string password){ Password = password;}
     void setAccountId(int id) { AccountId = id; }
     void setHandlerName(const string& name) { HandlerName = name; }
 
