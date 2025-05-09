@@ -3,5 +3,5 @@ using namespace std;
 
 int main() 
 {
-    cout << "Lesg";
+    cout << "Lesgo";
 }
