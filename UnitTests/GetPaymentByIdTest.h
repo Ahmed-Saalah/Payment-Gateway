@@ -15,6 +15,8 @@ public:
         
         GetPaymentResponse response = handler.Handle(request);
         
+        cout << response.Message << endl;
+        
         response.payment.Display();
     }
 };

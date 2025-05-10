@@ -53,6 +53,7 @@ public:
 
     void Display()
     {
+        if (PaymentId == -1) return;
         cout  << "Payment: \n"
             << "PaymentId: " << PaymentId << '\n'
             << "AccountId: " << AccountId << "\n"

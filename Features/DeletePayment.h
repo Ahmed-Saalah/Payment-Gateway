@@ -1,30 +1,33 @@
 #include <iostream>
 #include <string>
 
-#include "Payment.h"
-#include "PaymentStorage.h"
-#include "PaymentStorage.h"
+#include "../Models/Payment.h"
+#include "../Storage/PaymentStorage.h"
 
 using namespace std;
 
 struct DeletePaymentRequest
 {
     int PaymentId;
+    DeletePaymentRequest(int id) : PaymentId(id) {}
 };
 
 struct DeletePaymentResponse
 {
-    bool Success;
-    string Message;
+    bool success;
+    string message;
+
+    DeletePaymentResponse(bool status, const string& msg)
+        : success(status), message(msg) {}
 };
 
-class DeletePayment
+class DeletePaymentHandler
 {
 private:
     PaymentStorage &paymentStorage;
 
 public:
-    DeletePayment(PaymentStorage &storage) : paymentStorage(storage) {}
+    DeletePaymentHandler(PaymentStorage &storage) : paymentStorage(storage) {}
 
     DeletePaymentResponse Handle(const DeletePaymentRequest &request)
     {
