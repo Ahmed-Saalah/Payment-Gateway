@@ -1,44 +1,47 @@
 #include <iostream>
 #include <string>
-
-#include "Refund.h"
-#include "RefundStorage.h"
+#include "../Models/Refund.h"
+#include "../Storage/RefundStorage.h"
 
 using namespace std;
 
 struct GetRefundByIdRequest
 {
     int RefundId;
+    GetRefundByIdRequest(int id) : RefundId(id) {}
 };
 
-struct GetPaymentByIdResponse
+struct GetRefundResponse
 {
-    bool Found;
-    Refund RefundResult;
-    string Message;
+    Refund refund;
+    string message;
 
-    GetPaymentByIdResponse(bool found, const Refund& refund, const string& message)
-        : Found(found), RefundResult(refund), Message(message) {}
+    GetRefundResponse(const Refund& refund, const string& msg)
+        : refund(refund), message(msg) {}
+
+    explicit GetRefundResponse(const string& msg)
+        : refund(Refund()), message(msg) {}
 };
 
-class GetRefundById
+class GetRefundByIdHandler
 {
 private:
     RefundStorage &refundStorage;
 
 public:
-    GetRefundById(RefundStorage &storage) : refundStorage(storage) {}
+    GetRefundByIdHandler(RefundStorage &storage) : refundStorage(storage) {}
 
-    GetPaymentByIdResponse Handle(const GetRefundByIdRequest &request)
+    GetRefundResponse Handle(const GetRefundByIdRequest &request)
     {
         Refund* result = refundStorage.GetRefundById(request.RefundId);
+
         if (result != nullptr)
         {
-            return {true, *result, "Refund found."};
+            return GetRefundResponse(*result, "Refund found.");
         }
         else
         {
-            return {false, Refund(), "Refund not found."};
+            return GetRefundResponse("Refund not found.");
         }
     }
 };

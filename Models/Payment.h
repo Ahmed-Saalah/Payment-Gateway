@@ -18,7 +18,6 @@ private:
     double Amount;
     PaymentMethods PaymentMethod;
     string Status;
-    string Timestamp;
 
     static int Ids;
 
@@ -33,9 +32,7 @@ private:
     }
 
 public:
-    Payment()
-    : PaymentId(-1), AccountId(0), Amount(0.0),
-      PaymentMethod(PaymentMethods::Cash), Status(""), Timestamp("") {}
+    Payment() : PaymentId(-1) {}
 
     Payment(int accountId, double amount, PaymentMethods paymentMethod, string status) 
     : PaymentId(Ids++), AccountId(accountId), Amount(amount), PaymentMethod(paymentMethod), Status(status) {}
@@ -43,7 +40,7 @@ public:
    Payment(const Payment& other)
     : PaymentId(other.PaymentId), AccountId(other.AccountId),
       Amount(other.Amount), PaymentMethod(other.PaymentMethod),
-      Status(other.Status), Timestamp(other.Timestamp) {}
+      Status(other.Status) {}
 
     int GetPaymentId() {return PaymentId;}
     string GetStatus() {return Status; }
@@ -54,6 +51,7 @@ public:
     void Display()
     {
         if (PaymentId == -1) return;
+        
         cout  << "Payment: \n"
             << "PaymentId: " << PaymentId << '\n'
             << "AccountId: " << AccountId << "\n"

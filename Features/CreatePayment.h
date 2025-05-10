@@ -63,7 +63,7 @@ public:
         try
         {
             PaymentMethods method = GetPaymentMethod(request.paymentMethodId);
-            Payment newPayment(request.accountId, request.amount, method, "Created");
+            Payment newPayment(request.accountId, request.amount, method, "paid");
             paymentStorage.InsertPayment(newPayment);
             return CreatePaymentResponse(newPayment, "Payment created successfully.");
         }

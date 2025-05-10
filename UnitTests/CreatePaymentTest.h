@@ -10,7 +10,7 @@ public:
         PaymentStorage storage;
         CreatePaymentHandler handler(storage);
 
-        CreatePaymentRequest request(101, 150.75, 2);
+        CreatePaymentRequest request(101, 10, 2);
         
         CreatePaymentResponse response = handler.Handle(request);
         

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 
-#include "Refund.h"
-#include "RefundStorage.h"
+#include "../Models/Refund.h"
+#include "../Storage/RefundStorage.h"
 
 using namespace std;
 
@@ -10,21 +10,25 @@ using namespace std;
 struct DeleteRefundRequest
 {
     int RefundId;
+    DeleteRefundRequest(int id) : RefundId(id) {}
 };
 
 struct DeleteRefundResponse
 {
-    bool Success;
-    string Message;
+    bool succes;
+    string message;
+
+    DeleteRefundResponse(bool status, const string& msg)
+        : succes(status), message(msg) {}
 };
 
-class DeleteRefund
+class DeleteRefundHandler
 {
 private:
     RefundStorage &refundStorage;
 
 public:
-    DeleteRefund(RefundStorage &storage) : refundStorage(storage) {}
+    DeleteRefundHandler(RefundStorage &storage) : refundStorage(storage) {}
 
     DeleteRefundResponse Handle(const DeleteRefundRequest &request)
     {
