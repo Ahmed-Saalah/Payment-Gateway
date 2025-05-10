@@ -1,7 +1,17 @@
 #include <iostream>
+
+#include "UnitTests/CreatePaymentTest.h"
+#include "UnitTests/GetPaymentByIdTest.h"
+
 using namespace std;
 
 int main() 
 {
-    cout << "Lesgo";
+    CreatePaymentTest::Create();
+
+    cout << endl;
+    
+    GetPaymentByIdTest::Get();
+    
+    return 0;
 }

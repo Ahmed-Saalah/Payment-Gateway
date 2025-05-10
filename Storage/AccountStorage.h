@@ -1,13 +1,14 @@
 #include <iostream> 
 #include <vector>
-#include <Account.cpp>
+#include "../Models/Account.h"
 
 using namespace std;
 
 class AccountStorage
 {
 private:
-    vector<Account>Accounts;
+    static vector<Account> Accounts;
+
 public:
     void InsertAccount(const Account &Account)
     {
@@ -33,11 +34,11 @@ public:
             if(it->getAccountId() == AccountId)
             {
                 Accounts.erase(it);
-                cout<<"Delete Account. \n";
+                cout<<"Account deleted.\n";
                 return true;
             }
         }
-        cout<<"Account not found.\n";
+        cout << "Account not found.\n";
         return false;
     }
 
@@ -56,3 +57,5 @@ public:
     }
 
 };
+
+vector<Account> AccountStorage::Accounts;

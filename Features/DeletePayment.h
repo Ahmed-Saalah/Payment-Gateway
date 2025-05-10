@@ -1,8 +1,9 @@
 #include <iostream>
 #include <string>
 
-#include "../Models/Payment.cpp"
-#include "../Storage/PaymentStorage.cpp"
+#include "Payment.h"
+#include "PaymentStorage.h"
+#include "PaymentStorage.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
     DeletePaymentResponse Handle(const DeletePaymentRequest &request)
     {
         bool deleted = paymentStorage.DeletePayment(request.PaymentId);
+
         if (deleted)
         {
             return {true, "Payment deleted successfully."};

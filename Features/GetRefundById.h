@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
-#include "../Models/Refund.cpp"
-#include "../Storage/RefundStorage.cpp"
+
+#include "Refund.h"
+#include "RefundStorage.h"
 
 using namespace std;
 

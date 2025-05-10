@@ -2,9 +2,10 @@
 #include <string>
 #include <ctime>
 
-#include "../Models/Refund.cpp"
-#include "../Storage/RefundStorage.cpp"
-#include "../Storage/PaymentStorage.cpp"
+#include "Refund.h"
+#include "Payment.h"
+#include "RefundStorage.h"
+#include "PaymentStorage.h"
 
 using namespace std;
 
@@ -40,7 +41,6 @@ public:
 
     CreateRefundResponse Handle(const CreateRefundRequest& request)
     {
-        // Validate payment
         Payment* payment = paymentStorage.GetPaymentById(request.PaymentId);
         if (payment == nullptr)
         {
@@ -57,10 +57,9 @@ public:
             return CreateRefundResponse(Refund(), false, "Invalid refund amount.");
         }
 
-        // Get current timestamp
         time_t now = time(0);
         string timestamp = ctime(&now);
-        timestamp.pop_back(); // remove newline
+        timestamp.pop_back(); 
 
         Refund newRefund(request.PaymentId, request.Amount, request.Reason, timestamp, "created");
         refundStorage.InsertRefund(newRefund);

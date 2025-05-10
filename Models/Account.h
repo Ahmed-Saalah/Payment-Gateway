@@ -12,19 +12,26 @@ private:
 
 public:
     Account() = default;
-    Account(const string& name , string password): AccountId(Ids++), HandlerName(name), Password(password) {}
+    Account(const string& name , string password)
+        : AccountId(Ids++), HandlerName(name), Password(password) {}
 
     int getAccountId() const { return AccountId; }
+
     string getHandlerName() const { return HandlerName; }
-    string getPassword()const{ return password;}
+
+    string getPassword() const{ return Password; }
 
     void setPassword(string password){ Password = password;}
+
     void setAccountId(int id) { AccountId = id; }
+    
     void setHandlerName(const string& name) { HandlerName = name; }
 
     void printAccount() const {
-        cout << "Account ID: " << AccountId << "\n";
-        cout << "Handler Name: " << HandlerName << "\n";
+        cout << "Account: \n"
+            << "AccountId: " << AccountId << "\n"
+            << "Handler Name: " << HandlerName << "\n" << endl;
     }
 };
-    int Account::Ids;
+
+int Account::Ids;

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/Projects/Payment-Gateway",
-      "program": "d:/Projects/Payment-Gateway/build/Debug/outDebug",
+      "cwd": "d:/Projects/Payment-Gateway/UnitTests",
+      "program": "d:/Projects/Payment-Gateway/UnitTests/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

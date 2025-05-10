@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
-#include "../Models/Refund.cpp"
+#include "../Models/Refund.h"
 
 using namespace std;
 
 class RefundStorage
 {
 private:
-    vector<Refund> refunds;
+    static vector<Refund> refunds;
 
 public:
     void InsertRefund(const Refund &refund)
@@ -48,3 +48,5 @@ public:
         }
     }
 };
+
+vector<Refund> RefundStorage::refunds;

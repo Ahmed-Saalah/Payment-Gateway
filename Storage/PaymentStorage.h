@@ -1,13 +1,15 @@
+#pragma once
+
 #include <iostream> 
 #include <vector>
-#include <Payment.cpp>
+#include "../Models/Payment.h"
 
 using namespace std; 
 
 class PaymentStorage
 {
 private:
-    vector<Payment> payments;
+    static vector<Payment> payments;
 
 public:
     void InsertPayment(const Payment &payment)
@@ -73,3 +75,5 @@ public:
         }
     }
 };
+
+vector<Payment> PaymentStorage::payments;
