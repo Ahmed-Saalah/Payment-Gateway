@@ -1,25 +1,26 @@
-#include <iostream>
+#pragma once
 #include <string>
-
-#include "Account.h"
-#include "AccountStorage.h"
+#include "../Storage/AccountStorage.h"
+#include "../Models/Account.h"
 
 using namespace std;
 
 class CreateAccountRequest {
 public:
-    string HandlerName; 
+    string HandlerName;
     string Password;
 
-    CreateAccountRequest(string handlerName, string password) 
+    CreateAccountRequest(string handlerName, string password)
         : HandlerName(handlerName), Password(password) {}
 };
 
-class CreateAccountResponse { 
+class CreateAccountResponse {
 public:
+    string message;
     Account AccountResult;
 
-    CreateAccountResponse(Account account) : AccountResult(account) {}
+    CreateAccountResponse(const string& msg, const Account& account)
+        : message(msg), AccountResult(account) {}
 };
 
 class CreateAccountMediator {
@@ -32,6 +33,6 @@ public:
     CreateAccountResponse CreateAccount(const CreateAccountRequest& request) {
         Account newAccount(request.HandlerName, request.Password);
         accountStorage.InsertAccount(newAccount);
-        return CreateAccountResponse(newAccount);
+        return CreateAccountResponse("Account created successfully.", newAccount);
     }
 };

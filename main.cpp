@@ -6,13 +6,39 @@
 #include "UnitTests/CreateRefundTest.h"
 #include "UnitTests/DeleteRefundTest.h"
 #include "UnitTests/GetRefundByIdTest.h"
+#include "UnitTests/CreateAccountTest.h"
+#include "UnitTests/GetAccountByIdTest.h"
+#include "UnitTests/DeleteAccountTest.h"
 
 using namespace std;
 
 int main() 
 {
 
-    #pragma region Payment 
+
+     /*#pragma region Account 
+    CreateAccountTest::Create();
+
+    cout << endl;
+    
+    GetAccountByIdTest::Get(1);
+    
+    cout << endl;
+
+    DeleteAccountTest::Delete(1);
+
+    cout << endl;
+
+    GetAccountByIdTest::Get(1);
+    cout << endl;
+  
+    #pragma endregion Account*/
+
+
+    cout << endl;
+
+
+    /*#pragma region Payment 
     CreatePaymentTest::Create();
 
     cout << endl;
@@ -29,9 +55,9 @@ int main()
     #pragma endregion Payment
 
 
-    cout << endl;
+    cout << endl;*/
     
-    #pragma region Refund
+    /*#pragma region Refund
     CreateRefundTest::Create(); // Refunded
     CreateRefundTest::Create(); // Amount exeded
     
@@ -42,6 +68,6 @@ int main()
     GetRefundByIdTest::Get();
     
     #pragma endregion Refund
-    
+*/
     return 0;
 }
