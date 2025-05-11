@@ -62,16 +62,16 @@ int main()
         CreatePaymentTest::Create();
         cout << endl;
 
-        CreateRefundTest::Create(); // !Paid
+        CreateRefundTest::Create(1); // !Paid
         cout << endl;
         
         MarkPaymentStatusAsPaidTest::mark(1);
         cout << endl;
         
-        CreateRefundTest::Create(); // Refunded
+        CreateRefundTest::Create(1); // Refunded
         cout << endl;
         
-        CreateRefundTest::Create(); // Amount exeded
+        CreateRefundTest::Create(1); // Amount exeded
         cout << endl;
 
         DeleteRefundTest::Delete(1); 
