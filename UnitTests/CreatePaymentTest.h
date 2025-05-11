@@ -7,10 +7,11 @@ using namespace std;
 class CreatePaymentTest {
 public:
     static void Create() {
-        PaymentStorage storage;
+        PaymentRepository storage;
+        
         CreatePaymentHandler handler(storage);
 
-        CreatePaymentRequest request(101, 10, 2);
+        CreatePaymentRequest request(1, 10);
         
         CreatePaymentResponse response = handler.Handle(request);
         

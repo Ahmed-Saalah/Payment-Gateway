@@ -6,7 +6,7 @@ class DeleteRefundTest
 {
 public:
     static void Delete() {
-        RefundStorage storage;
+        RefundRepository storage;
 
         DeleteRefundHandler handler(storage);
 

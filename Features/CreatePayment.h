@@ -2,7 +2,8 @@
 
 #include <iostream>
 #include <string>
-#include "../Storage/PaymentStorage.h"
+#include "../Storage/PaymentRepository.h"
+#include "../Storage/IRepository.h"
 #include "../Models/Payment.h"
 using namespace std;
 
@@ -10,12 +11,11 @@ struct CreatePaymentRequest
 {
     int accountId{};
     double amount{};
-    int paymentMethodId{};
 
     CreatePaymentRequest() = default;
 
-    CreatePaymentRequest(int accountId, double amount, int paymentMethodId)
-        : accountId(accountId), amount(amount), paymentMethodId(paymentMethodId) {}
+    CreatePaymentRequest(int accountId, double amount)
+        : accountId(accountId), amount(amount) {}
 };
 
 struct CreatePaymentResponse
@@ -35,22 +35,11 @@ struct CreatePaymentResponse
 class CreatePaymentHandler
 {
 private:
-    PaymentStorage& paymentStorage;
-
-    PaymentMethods GetPaymentMethod(int methodId) const
-    {
-        switch (methodId)
-        {
-            case 1: return PaymentMethods::Cash;
-            case 2: return PaymentMethods::CreditCard;
-            case 3: return PaymentMethods::PayPal;
-            default: throw invalid_argument("Invalid payment method ID.");
-        }
-    }
+    IRepository<Payment>& PaymentRepository;
 
 public:
-    explicit CreatePaymentHandler(PaymentStorage& storage)
-        : paymentStorage(storage) {}
+    explicit CreatePaymentHandler(IRepository<Payment>& storage)
+        : PaymentRepository(storage) {}
 
     CreatePaymentResponse Handle(const CreatePaymentRequest& request)
     {
@@ -62,9 +51,8 @@ public:
 
         try
         {
-            PaymentMethods method = GetPaymentMethod(request.paymentMethodId);
-            Payment newPayment(request.accountId, request.amount, method, "paid");
-            paymentStorage.InsertPayment(newPayment);
+            Payment newPayment(request.accountId, request.amount, "created");
+            PaymentRepository.Insert(newPayment);
             return CreatePaymentResponse(newPayment, "Payment created successfully.");
         }
         catch (const invalid_argument& e)

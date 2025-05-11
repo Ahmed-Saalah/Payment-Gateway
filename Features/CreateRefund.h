@@ -4,8 +4,9 @@
 
 #include "../Models/Refund.h"
 #include "../Models/Payment.h"
-#include "../Storage/RefundStorage.h"
-#include "../Storage/PaymentStorage.h"
+#include "../Storage/RefundRepository.h"
+#include "../Storage/PaymentRepository.h"
+#include "../Storage/IRepository.h"
 
 using namespace std;
 
@@ -34,16 +35,17 @@ struct CreateRefundResponse
 class CreateRefundHandler
 {
 private:
-    RefundStorage& refundStorage;
-    PaymentStorage& paymentStorage;
+    IRepository<Refund>& RefundRepository;
+    IRepository<Payment>& PaymentRepository;
 
 public:
-    CreateRefundHandler(RefundStorage& rs, PaymentStorage& ps)
-        : refundStorage(rs), paymentStorage(ps) {}
+    CreateRefundHandler(IRepository<Refund>& rs, IRepository<Payment>& ps)
+        : RefundRepository(rs), PaymentRepository(ps) {}
 
     CreateRefundResponse Handle(const CreateRefundRequest& request)
     {
-        Payment* payment = paymentStorage.GetPaymentById(request.PaymentId);
+        Payment* payment = PaymentRepository.GetById(request.PaymentId);
+
         if (payment == nullptr)
         {
             return CreateRefundResponse("Payment not found.");
@@ -60,9 +62,13 @@ public:
         }
 
         Refund newRefund(request.PaymentId, request.Amount, request.Reason, "created");
-        refundStorage.InsertRefund(newRefund);
+        RefundRepository.Insert(newRefund);
 
-        paymentStorage.UpdatePayment(payment->GetPaymentId(), payment->GetAmount() - request.Amount, payment->GetStatus());
+        payment->SetStatus("refunded");
+        payment->SetAmount(payment->GetAmount() - request.Amount);
+
+        PaymentRepository.Update(payment->GetPaymentId(), *payment);
+
         return CreateRefundResponse(newRefund, "Refund created successfully.");
     }
 };

@@ -3,21 +3,22 @@
 #include <iostream> 
 #include <vector>
 #include "../Models/Payment.h"
+#include "IRepository.h"
 
 using namespace std; 
 
-class PaymentStorage
+class PaymentRepository : public IRepository<Payment>
 {
 private:
     static vector<Payment> payments;
 
 public:
-    void InsertPayment(const Payment &payment)
+    void Insert(const Payment &payment) override
     {
         payments.push_back(payment);
     }
 
-    Payment* GetPaymentById(int paymentId)
+    Payment* GetById(int paymentId) override
     {
         for (auto &payment : payments)
         {
@@ -29,51 +30,46 @@ public:
         return nullptr;
     }
 
-
-    bool UpdatePayment(int paymentId, double newAmount, const string &newStatus)
+    bool Update(int id, Payment& updatedItem) override
     {
-        for (auto &payment : payments)
+        for (auto& payment : payments)
         {
-            if (payment.GetPaymentId() == paymentId)
+            if (payment.GetPaymentId() == id)
             {
-                payment.SetAmount(newAmount);
-                payment.SetStatus(newStatus);
-                cout << "Payment updated.\n";
+                payment.SetAmount(updatedItem.GetAmount());
+                payment.SetStatus(updatedItem.GetStatus());
                 return true;
             }
         }
-        cout << "Payment not found.\n";
         return false;
     }
 
-    bool DeletePayment(int paymentId)
+    bool Delete(int id) override
     {
         for (auto it = payments.begin(); it != payments.end(); ++it)
         {
-            if (it->GetPaymentId() == paymentId)
+            if (it->GetPaymentId() == id)
             {
                 payments.erase(it);
-                cout << "Payment deleted.\n";
                 return true;
             }
         }
-        cout << "Payment not found.\n";
         return false;
     }
     
-    void DisplayAllPayments() const
+    void DisplayAll() const override
     {
         if (payments.empty())
         {
-            cout << "No payments stored.\n";
+            std::cout << "No payments stored.\n";
             return;
         }
 
-        for (auto payment : payments)
+        for (const auto& payment : payments)
         {
             payment.Display();
         }
     }
 };
 
-vector<Payment> PaymentStorage::payments;
+vector<Payment> PaymentRepository::payments;

@@ -7,7 +7,7 @@ using namespace std;
 class GetRefundByIdTest {
 public:
     static void Get() {
-        RefundStorage storage;
+        RefundRepository storage;
         
         GetRefundByIdHandler handler(storage);
 

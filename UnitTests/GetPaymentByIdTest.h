@@ -7,7 +7,7 @@ using namespace std;
 class GetPaymentByIdTest {
 public:
     static void Get() {
-        PaymentStorage storage;
+        PaymentRepository storage;
         
         GetPaymentHandler handler(storage);
 

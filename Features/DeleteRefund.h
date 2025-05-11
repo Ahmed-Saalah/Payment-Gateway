@@ -2,7 +2,8 @@
 #include <string>
 
 #include "../Models/Refund.h"
-#include "../Storage/RefundStorage.h"
+#include "../Storage/RefundRepository.h"
+#include "../Storage/IRepository.h"
 
 using namespace std;
 
@@ -25,14 +26,14 @@ struct DeleteRefundResponse
 class DeleteRefundHandler
 {
 private:
-    RefundStorage &refundStorage;
+    IRepository<Refund> &RefundRepository;
 
 public:
-    DeleteRefundHandler(RefundStorage &storage) : refundStorage(storage) {}
+    DeleteRefundHandler(IRepository<Refund> &storage) : RefundRepository(storage) {}
 
     DeleteRefundResponse Handle(const DeleteRefundRequest &request)
     {
-        bool deleted = refundStorage.DeleteRefund(request.RefundId);
+        bool deleted = RefundRepository.Delete(request.RefundId);
         if (deleted)
         {
             return {true, "Refund deleted successfully."};

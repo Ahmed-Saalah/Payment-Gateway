@@ -10,18 +10,18 @@ private:
     int AccountId;
     string HandlerName; 
     string Password;
-    static int Ids;
+    static int identity;
 
 public:
     Account(): AccountId(-1) {}
+
     Account(const string& name , string password)
-        : AccountId(Ids++), HandlerName(name), Password(password) {}
+        : AccountId(identity++), HandlerName(name), Password(password) {}
     
     Account(const Account& other) :
         AccountId(other.AccountId), 
         Password(other.Password),
         HandlerName(other.HandlerName) {}
-
 
 
     int getAccountId() const { return AccountId; }
@@ -43,4 +43,4 @@ public:
     }
 };
 
-int Account::Ids=1;
+int Account::identity =1;

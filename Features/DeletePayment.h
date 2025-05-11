@@ -2,7 +2,8 @@
 #include <string>
 
 #include "../Models/Payment.h"
-#include "../Storage/PaymentStorage.h"
+#include "../Storage/PaymentRepository.h"
+#include "../Storage/IRepository.h"
 
 using namespace std;
 
@@ -24,14 +25,14 @@ struct DeletePaymentResponse
 class DeletePaymentHandler
 {
 private:
-    PaymentStorage &paymentStorage;
+    IRepository<Payment>& PaymentRepository;
 
 public:
-    DeletePaymentHandler(PaymentStorage &storage) : paymentStorage(storage) {}
+    DeletePaymentHandler(IRepository<Payment>& storage) : PaymentRepository(storage) {}
 
     DeletePaymentResponse Handle(const DeletePaymentRequest &request)
     {
-        bool deleted = paymentStorage.DeletePayment(request.PaymentId);
+        bool deleted = PaymentRepository.Delete(request.PaymentId);
 
         if (deleted)
         {

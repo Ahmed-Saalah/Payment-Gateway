@@ -7,8 +7,8 @@ using namespace std;
 class CreateRefundTest {
 public:
     static void Create() {
-        RefundStorage refundStorage;
-        PaymentStorage paymentStorage;
+        RefundRepository refundStorage;
+        PaymentRepository paymentStorage;
         CreateRefundHandler handler(refundStorage, paymentStorage);
 
         CreateRefundRequest request(1, 6, "Dummy reason");

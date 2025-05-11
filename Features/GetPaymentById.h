@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 #include "../Models/Payment.h"
-#include "../Storage/PaymentStorage.h"
+#include "../Storage/PaymentRepository.h"
+#include "../Storage/IRepository.h"
 
 using namespace std;
 
@@ -25,14 +26,14 @@ struct GetPaymentResponse {
 
 class GetPaymentHandler {
 private:
-    PaymentStorage& paymentStorage;
+    IRepository<Payment>& PaymentRepository;
 
 public:
-    explicit GetPaymentHandler(PaymentStorage& storage) : paymentStorage(storage) {}
+    explicit GetPaymentHandler(IRepository<Payment>& storage) : PaymentRepository(storage) {}
 
     GetPaymentResponse Handle(const GetPaymentRequest& request) 
     {
-        Payment* result = paymentStorage.GetPaymentById(request.PaymentId);
+        Payment* result = PaymentRepository.GetById(request.PaymentId);
         
         if (result != nullptr) {
             return GetPaymentResponse(*result, "Payment found.");

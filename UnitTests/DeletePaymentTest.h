@@ -6,7 +6,7 @@ class DeletePaymentTest
 {
 public:
     static void Delete() {
-        PaymentStorage storage;
+        PaymentRepository storage;
 
         DeletePaymentHandler handler(storage);
 

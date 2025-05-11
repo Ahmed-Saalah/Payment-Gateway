@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 #include "../Models/Refund.h"
-#include "../Storage/RefundStorage.h"
+#include "../Storage/RefundRepository.h"
+#include "../Storage/IRepository.h"
 
 using namespace std;
 
@@ -26,14 +27,14 @@ struct GetRefundResponse
 class GetRefundByIdHandler
 {
 private:
-    RefundStorage &refundStorage;
+    IRepository<Refund> &RefundRepository;
 
 public:
-    GetRefundByIdHandler(RefundStorage &storage) : refundStorage(storage) {}
+    GetRefundByIdHandler(IRepository<Refund> &storage) : RefundRepository(storage) {}
 
     GetRefundResponse Handle(const GetRefundByIdRequest &request)
     {
-        Refund* result = refundStorage.GetRefundById(request.RefundId);
+        Refund* result = RefundRepository.GetById(request.RefundId);
 
         if (result != nullptr)
         {
