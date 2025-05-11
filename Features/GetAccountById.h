@@ -35,9 +35,9 @@ public:
         Account* result = accountStorage.GetById(request.accountId);
         
         if (result != nullptr) {
-            return GetAccountResponse(*result, "Payment found.");
+            return GetAccountResponse(*result, "Account found.");
         } else {
-            return GetAccountResponse("Payment not found.");
+            return GetAccountResponse("Account not found.");
         }
     }
 };

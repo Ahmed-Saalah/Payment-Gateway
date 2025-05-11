@@ -6,12 +6,12 @@ using namespace std;
 
 class GetPaymentByIdTest {
 public:
-    static void Get() {
+    static void Get(int id) {
         PaymentRepository storage;
         
         GetPaymentHandler handler(storage);
 
-        GetPaymentRequest request(1);
+        GetPaymentRequest request(id);
         
         GetPaymentResponse response = handler.Handle(request);
         

@@ -5,12 +5,12 @@
 class DeleteRefundTest
 {
 public:
-    static void Delete() {
+    static void Delete(int id) {
         RefundRepository storage;
 
         DeleteRefundHandler handler(storage);
 
-        DeleteRefundRequest request(1);
+        DeleteRefundRequest request(id);
 
         DeleteRefundResponse response = handler.Handle(request);
 

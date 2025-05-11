@@ -6,12 +6,12 @@ using namespace std;
 
 class GetRefundByIdTest {
 public:
-    static void Get() {
+    static void Get(int id) {
         RefundRepository storage;
         
         GetRefundByIdHandler handler(storage);
 
-        GetRefundByIdRequest request(1);
+        GetRefundByIdRequest request(id);
         
         GetRefundResponse response = handler.Handle(request);
         

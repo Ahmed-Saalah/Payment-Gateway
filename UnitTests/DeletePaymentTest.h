@@ -5,12 +5,12 @@
 class DeletePaymentTest
 {
 public:
-    static void Delete() {
+    static void Delete(int id) {
         PaymentRepository storage;
 
         DeletePaymentHandler handler(storage);
 
-        DeletePaymentRequest request(1);
+        DeletePaymentRequest request(id);
 
         DeletePaymentResponse response = handler.Handle(request);
 

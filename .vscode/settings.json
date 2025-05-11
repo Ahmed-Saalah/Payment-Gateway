@@ -106,7 +106,8 @@
     "ranges": "cpp",
     "span": "cpp",
     "text_encoding": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "markpaymentstatusaspaid": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
