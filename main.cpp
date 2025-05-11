@@ -16,60 +16,58 @@ int main()
 {
 
 
-     /*#pragma region Account 
-    CreateAccountTest::Create();
+    #pragma region Account 
+        // CreateAccountTest::Create();
+
+        // cout << endl;
+        
+        // GetAccountByIdTest::Get(1);
+        
+        // cout << endl;
+
+        // DeleteAccountTest::Delete(1);
+
+        // cout << endl;
+
+        // GetAccountByIdTest::Get(1);
+        // cout << endl;
+    #pragma endregion Account
+
+
+    cout << endl;
+
+
+    #pragma region Payment 
+        // CreatePaymentTest::Create();
+
+        // cout << endl;
+        
+        // GetPaymentByIdTest::Get();
+        
+        // cout << endl;
+
+        // DeletePaymentTest::Delete();
+
+        // cout << endl;
+
+        // GetPaymentByIdTest::Get();
+    // #pragma endregion Payment
+
 
     cout << endl;
     
-    GetAccountByIdTest::Get(1);
-    
-    cout << endl;
+    #pragma region Refund
 
-    DeleteAccountTest::Delete(1);
+        // CreateRefundTest::Create(); // Refunded
+        // CreateRefundTest::Create(); // Amount exeded
+        
+        // DeleteRefundTest::Delete();
 
-    cout << endl;
-
-    GetAccountByIdTest::Get(1);
-    cout << endl;
-  
-    #pragma endregion Account*/
-
-
-    cout << endl;
-
-
-    /*#pragma region Payment 
-    CreatePaymentTest::Create();
-
-    cout << endl;
-    
-    GetPaymentByIdTest::Get();
-    
-    cout << endl;
-
-    DeletePaymentTest::Delete();
-
-    cout << endl;
-
-    GetPaymentByIdTest::Get();
-    #pragma endregion Payment
-
-
-    cout << endl;*/
-    
-    /*#pragma region Refund
-    CreateRefundTest::Create(); // Refunded
-    CreateRefundTest::Create(); // Amount exeded
-    
-    DeleteRefundTest::Delete();
-
-    cout << endl;
-    
-    GetRefundByIdTest::Get();
+        // cout << endl;
+        
+        // GetRefundByIdTest::Get();
     
     #pragma endregion Refund
-    */
    
-    cout << "Lessssgo\n";
     return 0;
 }

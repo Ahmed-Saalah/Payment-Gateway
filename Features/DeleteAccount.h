@@ -1,5 +1,5 @@
 #pragma once
-#include "../Storage/AccountStorage.h"
+#include "../Storage/IRepository.h"
 
 struct DeleteAccountRequest {
     int accountId;
@@ -9,24 +9,28 @@ struct DeleteAccountRequest {
 struct DeleteAccountResponse {
     bool success;
     string message;
-    Account deletedAccount;
 
-    DeleteAccountResponse(bool s, const string& m, const Account& acc)
-        : success(s), message(m), deletedAccount(acc) {}
+    DeleteAccountResponse(bool status, const string& msg)
+        : success(status), message(msg) {}
 };
 
 class DeleteAccountHandler {
 private:
-    AccountStorage& storage;
+    IRepository<Account>& accountRepository;
 
 public:
-    explicit DeleteAccountHandler(AccountStorage& s) : storage(s) {}
+    explicit DeleteAccountHandler(IRepository<Account>& _repo) : accountRepository(_repo) {}
 
     DeleteAccountResponse Handle(const DeleteAccountRequest& request) {
-        Account* account = storage.GetAccountById(request.accountId);
-        if (account && storage.DeleteAccountById(request.accountId)) {
-            return {true, "Account moved to deleted records.", *account};
+        bool deleted = accountRepository.Delete(request.accountId);
+
+        if (deleted)
+        {
+            return {true, "Account deleted successfully."};
         }
-        return {false, "Account not found.", Account()};
+        else
+        {
+            return {false, "Account not found."};
+        }
     }
 };

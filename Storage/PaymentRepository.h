@@ -70,6 +70,13 @@ public:
             payment.Display();
         }
     }
+
+    // void SeedData()
+    // {
+    //     payments.push_back(Payment(1, 100.0, "paid"));
+    //     payments.push_back(Payment(2, 200.5, "created"));
+    //     payments.push_back(Payment(3, 300.25, "paid"));
+    // }
 };
 
 vector<Payment> PaymentRepository::payments;

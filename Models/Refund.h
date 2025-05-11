@@ -11,7 +11,7 @@ private:
     int PaymentId;
     double Amount;
     string Reason;
-    string Status; // e.g., "created", "completed", "failed"
+    string Status;
 
     static int Ids;
 

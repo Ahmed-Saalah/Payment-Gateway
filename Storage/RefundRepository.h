@@ -70,6 +70,13 @@ public:
             refund.Display();
         }
     }
+
+    // void SeedData()
+    // {
+    //     refunds.push_back(Refund(1, 100.0, "Reason", "Created"));
+    //     refunds.push_back(Refund(2, 200.5, "Reason", "Refunded"));
+    //     refunds.push_back(Refund(3, 300.25, "Reason", "Created"));
+    // }
 };
 
 vector<Refund> RefundRepository::refunds;

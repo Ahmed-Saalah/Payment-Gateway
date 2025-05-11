@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
-#include "../Storage/AccountStorage.h"
 #include "../Models/Account.h"
+#include "../Storage/IRepository.h"
+#include "../Storage/AccountRepository.h"
 
 using namespace std;
 
@@ -25,14 +26,14 @@ public:
 
 class CreateAccountMediator {
 private:
-    AccountStorage& accountStorage;
+    IRepository<Account>& accountStorage;
 
 public:
-    CreateAccountMediator(AccountStorage& storage) : accountStorage(storage) {}
+    CreateAccountMediator(IRepository<Account>&  storage) : accountStorage(storage) {}
 
     CreateAccountResponse CreateAccount(const CreateAccountRequest& request) {
         Account newAccount(request.HandlerName, request.Password);
-        accountStorage.InsertAccount(newAccount);
+        accountStorage.Insert(newAccount);
         return CreateAccountResponse("Account created successfully.", newAccount);
     }
 };

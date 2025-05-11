@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 #include "../Models/Account.h"
-#include "../Storage/AccountStorage.h"
+#include "../Storage/IRepository.h"
+#include "../Storage/AccountRepository.h"
 
 using namespace std;
 
@@ -15,32 +16,28 @@ struct GetAccountRequest {
 struct GetAccountResponse {
     Account account;
     string message;
-    bool isDeleted; 
 
-    GetAccountResponse(const Account& acc, const string& msg, bool deleted)
-        : account(acc), message(msg), isDeleted(deleted) {}
+    GetAccountResponse(const Account _account, const string& msg)
+        : account(_account), message(msg) {}
 
     explicit GetAccountResponse(const string& msg)
-        : account(Account()), message(msg), isDeleted(false) {}
+        : account(Account()), message(msg) {}
 };
 
 class GetAccountHandler {
 private:
-    AccountStorage& accountStorage;
+    IRepository<Account>& accountStorage;
 
 public:
-    explicit GetAccountHandler(AccountStorage& storage) : accountStorage(storage) {}
+    explicit GetAccountHandler(IRepository<Account>& storage) : accountStorage(storage) {}
 
     GetAccountResponse handle(const GetAccountRequest& request) {
-        Account* result = accountStorage.GetAccountById(request.accountId);
+        Account* result = accountStorage.GetById(request.accountId);
         
         if (result != nullptr) {
-            bool isDeleted = accountStorage.IsAccountDeleted(request.accountId);
-            string statusMessage = isDeleted ? "Account found (deleted)." : "Account found.";
-            
-            return GetAccountResponse(*result, statusMessage, isDeleted);
+            return GetAccountResponse(*result, "Payment found.");
         } else {
-            return GetAccountResponse("Account not found.");
+            return GetAccountResponse("Payment not found.");
         }
     }
 };

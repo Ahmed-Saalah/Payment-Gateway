@@ -36,7 +36,7 @@ public:
     
     void setHandlerName(const string& name) { HandlerName = name; }
 
-    void printAccount() const {
+    void Display() const {
         cout << "Account: \n"
             << "AccountId: " << AccountId << "\n"
             << "Handler Name: " << HandlerName << "\n" << endl;

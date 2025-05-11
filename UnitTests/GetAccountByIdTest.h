@@ -11,7 +11,7 @@ public:
 
         cout << response.message << endl;
         if (response.account.getAccountId() != -1) {
-            response.account.printAccount();
+            response.account.Display();
         }
     }
 };

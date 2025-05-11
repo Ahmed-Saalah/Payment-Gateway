@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <ctime>
 
 #include "../Models/Refund.h"
 #include "../Models/Payment.h"
@@ -38,6 +37,31 @@ private:
     IRepository<Refund>& RefundRepository;
     IRepository<Payment>& PaymentRepository;
 
+    string validate(const CreateRefundRequest& request, Payment* payment)
+    {
+        if (payment == nullptr)
+        {
+            return "Payment not found.";
+        }
+
+        if (payment->GetStatus() != "paid")
+        {
+            return "Refund can only be issued for paid payments.";
+        }
+
+        if (request.Amount <= 0)
+        {
+            return "Refund amount must be greater than 0.";
+        }
+
+        if (request.Amount > payment->GetAmount())
+        {
+            return "Refund amount cannot exceed payment amount.";
+        }
+
+        return ""; 
+    }
+
 public:
     CreateRefundHandler(IRepository<Refund>& rs, IRepository<Payment>& ps)
         : RefundRepository(rs), PaymentRepository(ps) {}
@@ -46,19 +70,10 @@ public:
     {
         Payment* payment = PaymentRepository.GetById(request.PaymentId);
 
-        if (payment == nullptr)
-        {
-            return CreateRefundResponse("Payment not found.");
-        }
+        auto validationResult = validate(request, payment);
 
-        if (payment->GetStatus() != "paid")
-        {
-            return CreateRefundResponse("Refund can only be issued for paid payments.");
-        }
-
-        if (request.Amount <= 0 || request.Amount > payment->GetAmount())
-        {
-            return CreateRefundResponse("Invalid refund amount.");
+        if (!validationResult.empty()) {
+            return CreateRefundResponse(validationResult);
         }
 
         Refund newRefund(request.PaymentId, request.Amount, request.Reason, "created");
@@ -66,7 +81,6 @@ public:
 
         payment->SetStatus("refunded");
         payment->SetAmount(payment->GetAmount() - request.Amount);
-
         PaymentRepository.Update(payment->GetPaymentId(), *payment);
 
         return CreateRefundResponse(newRefund, "Refund created successfully.");

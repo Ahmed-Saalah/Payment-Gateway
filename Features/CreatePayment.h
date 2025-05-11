@@ -5,6 +5,7 @@
 #include "../Storage/PaymentRepository.h"
 #include "../Storage/IRepository.h"
 #include "../Models/Payment.h"
+
 using namespace std;
 
 struct CreatePaymentRequest
@@ -35,30 +36,42 @@ struct CreatePaymentResponse
 class CreatePaymentHandler
 {
 private:
-    IRepository<Payment>& PaymentRepository;
+    IRepository<Payment>& paymentRepository;
+
+    string validate(const CreatePaymentRequest& request) {
+        if (request.accountId <= 0) {
+            return "Error: Invalid account ID.";
+        }
+
+        if (request.amount <= 0) {
+            return "Error: Payment amount must be greater than 0.";
+        }
+
+        // TODO: Add real account existence validation here.
+
+        return "";
+    }
 
 public:
     explicit CreatePaymentHandler(IRepository<Payment>& storage)
-        : PaymentRepository(storage) {}
+        : paymentRepository(storage) {}
 
     CreatePaymentResponse Handle(const CreatePaymentRequest& request)
     {
-        if (request.amount <= 0)
-        {
-            cout << "Error: Payment amount must be greater than 0.\n";
-            return CreatePaymentResponse("Payment amount must be greater than 0.");
+        string validationResult = validate(request);
+
+        if (!validationResult.empty()) {
+            return CreatePaymentResponse(validationResult);
         }
 
-        try
-        {
+        try {
             Payment newPayment(request.accountId, request.amount, "created");
-            PaymentRepository.Insert(newPayment);
+            paymentRepository.Insert(newPayment);
             return CreatePaymentResponse(newPayment, "Payment created successfully.");
         }
-        catch (const invalid_argument& e)
-        {
-            cout << "Error: " << e.what() << '\n';
-            return CreatePaymentResponse("Invalid payment method ID.");
+        catch (const invalid_argument& e) {
+            cerr << "Error: " << e.what() << '\n';
+            return CreatePaymentResponse("Invalid payment data.");
         }
     }
 };

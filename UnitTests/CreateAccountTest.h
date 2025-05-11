@@ -11,7 +11,7 @@ public:
         CreateAccountResponse response = handler.CreateAccount(request);
 
         cout << response.message << endl;
-        response.AccountResult.printAccount();
+        response.AccountResult.Display();
     }
 };
 

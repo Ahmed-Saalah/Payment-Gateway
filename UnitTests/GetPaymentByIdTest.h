@@ -17,6 +17,8 @@ public:
         
         cout << response.Message << endl;
         
-        response.payment.Display();
+        if (response.payment.GetPaymentId() != -1) {
+            response.payment.Display();
+        }
     }
 };
