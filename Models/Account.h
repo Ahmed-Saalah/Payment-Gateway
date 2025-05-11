@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 
@@ -11,9 +13,16 @@ private:
     static int Ids;
 
 public:
-    Account() = default;
+    Account(): AccountId(-1) {}
     Account(const string& name , string password)
         : AccountId(Ids++), HandlerName(name), Password(password) {}
+    
+    Account(const Account& other) :
+        AccountId(other.AccountId), 
+        Password(other.Password),
+        HandlerName(other.HandlerName) {}
+
+
 
     int getAccountId() const { return AccountId; }
 
@@ -34,4 +43,4 @@ public:
     }
 };
 
-int Account::Ids;
+int Account::Ids=1;
